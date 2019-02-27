@@ -1,0 +1,399 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Computational Model &mdash; soepy 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Developer Notes" href="developer_docs.html" />
+    <link rel="prev" title="Mathematical Model" href="mathematical_model.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> soepy
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="economic_model.html">Economic Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mathematical_model.html">Mathematical Model</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Computational Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#toy-model">Toy model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#structural-equations">Structural equations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transformatons">Transformatons</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#enhanced-model">Enhanced model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#outline-of-model-components">Outline of model components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Structural equations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#instantaneous-utility">Instantaneous utility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#budget-constraint">Budget constraint</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#female-wage-equation">Female wage equation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#to-be-implemented">To be implemented</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developer_docs.html">Developer Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">soepy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Computational Model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/computational_model.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="computational-model">
+<h1>Computational Model<a class="headerlink" href="#computational-model" title="Permalink to this headline">¶</a></h1>
+<p>This part of the documentation specifies the functional forms, types of shocks and exogenous processes we bring together with the developed economic model to perform simulation and estimation. We discuss the functional form of the utility function, the laws of motion for the agents’ budget constraints, the chosen formulation of the wage and the experience accumulation processes, etc. in greater detail.</p>
+<div class="section" id="toy-model">
+<h2>Toy model<a class="headerlink" href="#toy-model" title="Permalink to this headline">¶</a></h2>
+<p>This section lays out the computational model corresponding to the current version of the code.</p>
+<div class="section" id="structural-equations">
+<h3>Structural equations<a class="headerlink" href="#structural-equations" title="Permalink to this headline">¶</a></h3>
+<p>In the toy model, the individual’s utility is given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}u(c_t, l_t; \theta) = \frac{c_t^\mu}{\mu}exp
+\begin{cases}
+0, &amp; \text{if $l_t = O$,}
+\\[4pt]
+\theta_P, &amp; \text{if $l_t = P$},
+\\[4pt]
+\theta_F, &amp; \text{if $l_t = F$},
+\end{cases}\end{split}\]</div>
+<p>In assuming this form of utility, the toy model abstracts away from some components we would like to include in the enhanced model. First, the above utility function does not include any covariates and corresponding coefficients in <span class="math notranslate nohighlight">\(U(.)\)</span> apart from the choice specific constant <span class="math notranslate nohighlight">\(\theta_l\)</span>. Second, it abstracts from weighting consumption by an equivalence scale.</p>
+<p>The budget constraint in the toy model is given by <span class="math notranslate nohighlight">\(c_t = h_t w_t\)</span>.</p>
+<p>The wage equation is given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{split}ln \hspace{2pt} w_t^m &amp; = \gamma_{s,0}  + \gamma_{s,1} ln(e_t + 1) + \xi_t,\\
+ln \hspace{2pt} w_t &amp; = ln \hspace{2pt} w_t^m - \xi_t,\\
+e_t &amp; = (e_P*g_{sP} + e_F)(1-\delta_s),\\\end{split}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(e_P\)</span> and <span class="math notranslate nohighlight">\(e_F\)</span> measure the total years in part-time and full-time experience accumulated up to period <span class="math notranslate nohighlight">\(t\)</span>.</p>
+</div>
+<div class="section" id="transformatons">
+<h3>Transformatons<a class="headerlink" href="#transformatons" title="Permalink to this headline">¶</a></h3>
+<p>To make the calculation of the flow utilities and value functions more explicit we substitute the above equation in one another. As a result we arrive at a single term that represents math:<cite>u(c_t, l_t, theta)</cite>.</p>
+<p>First we substitute the experience term in the first line of the wage equation,</p>
+<div class="math notranslate nohighlight">
+\[ln \hspace{2pt} w_t^m = \gamma_{s,0}  + \gamma_{s,1} ln[(e_P*g_{sP} + e_F)(1-\delta_s) + 1] + \xi_t,\]</div>
+<p>and take the exponent of both sides of the equation:</p>
+<div class="math notranslate nohighlight">
+\[w_t^m = exp \hspace{2pt} {\gamma_{s,0}} * \gamma_{s,1}[(e_P*g_{sP} + e_F)(1-\delta_s) + 1] * exp \hspace{2pt} {\xi_t},\]</div>
+<p>We then substitute the wage in the budget constraint:</p>
+<div class="math notranslate nohighlight">
+\[c_t = h_t * \{exp \hspace{2pt} {\gamma_{s,0}} * \gamma_{s,1}[(e_P*g_{sP} + e_F)(1-\delta_s) + 1] * exp \hspace{2pt} {\xi_t}\},\]</div>
+<p>And we arrive at the final expression by substituting consumption in the utility function:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{split}
+u(c_t, l_t; \theta) &amp; = \frac{h_t^\mu * \{exp \hspace{2pt} {\gamma_{s,0}} * \gamma_{s,1}[(e_P*g_{sP} + e_F)(1-\delta_s) + 1] * exp \hspace{2pt} {\xi_t}\}^\mu}{\mu} \hspace{2pt} *\\
+&amp; * \hspace{2pt} exp
+\begin{cases}
+0, &amp; \text{if $l_t = O$,}
+\\[4pt]
+\theta_P, &amp; \text{if $l_t = P$},
+\\[4pt]
+\theta_F, &amp; \text{if $l_t = F$},
+\end{cases}\end{split}\\\end{split}\]</div>
+<p>Finally, the distribution of the error term is assumed to be:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{eqnarray*}
+\begin{pmatrix}
+\xi_N\\
+\xi_P\\
+\xi_F
+\end{pmatrix} &amp; \sim &amp; N\left[\left(\begin{array}{c}
+0\\
+0\\
+0
+\end{array}\right),\left(\begin{array}{ccc}
+1 &amp; 0 &amp; 0\\
+0 &amp; 2 &amp; 0\\
+0 &amp; 0 &amp; 2.5
+\end{array}\right)\right]\\
+\end{eqnarray*}\end{split}\]</div>
+</div>
+</div>
+<div class="section" id="enhanced-model">
+<h2>Enhanced model<a class="headerlink" href="#enhanced-model" title="Permalink to this headline">¶</a></h2>
+<p>The goal of development efforts is directed to gradually extending the toy model towards the enhanced model presented below.</p>
+<div class="section" id="outline-of-model-components">
+<h3>Outline of model components<a class="headerlink" href="#outline-of-model-components" title="Permalink to this headline">¶</a></h3>
+<p>In this framework women are modelled between the age when they start working after having completed education and 60 years of age. They retire at the age of 60 and live for additional 10 years using their accumulated savings. No re-entry in education is possible in the model. Having completed education, in each period (year) of their life, women make consumption and labor supply choices. They choose between nonemployment (N), part-time (P), or full-time employment (F). Female workers face labor-market frictions.</p>
+<p>In the first period of observation, each woman draws a random preference for work, consisting of a utility cost of part-time work (<span class="math notranslate nohighlight">\(\theta_P\)</span>) and a utility-cost of full-time work (<span class="math notranslate nohighlight">\(\theta_F\)</span>). The utility cost parameters,  <span class="math notranslate nohighlight">\(\theta_F\)</span> and <span class="math notranslate nohighlight">\(\theta_P\)</span>, can take on two (or more) values each, i.e., there are two types: high - type I, and low - type II. The values of the type II coefficients are normalised to zero. Both parameter values, <span class="math notranslate nohighlight">\(\theta_F\)</span> and <span class="math notranslate nohighlight">\(\theta_P\)</span> for type I, as well as the frequency of type I individuals in the data are estimated alongside the other free parameters of the model.</p>
+<p>The tax and welfare system is year specific reflecting actual real world changes. It defines disposable income for each employment option. Households are credit constrained, i.e., they cannot borrow. Finally, the following elements enter the computational model as exogenous processes: childbirth, marriage, divorce and the male wage process.</p>
+</div>
+<div class="section" id="id1">
+<h3>Structural equations<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="instantaneous-utility">
+<h4>Instantaneous utility<a class="headerlink" href="#instantaneous-utility" title="Permalink to this headline">¶</a></h4>
+<p>The individuals’ flow utility is given by:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}u(c_t, l_t; \theta, Z_t) = \frac{(c_t/n_t)^\mu}{\mu}exp\{U(l_t, \theta, Z_t)\}\\\begin{split}U(l_t, \theta, Z_t) =
+\begin{cases}
+0, &amp; \text{if $l_t = O$,}
+\\[4pt]
+\theta_l + Z'_t\alpha(l_t), &amp; \text{if $l_t = P$ or $F$},
+\end{cases}\end{split}\end{aligned}\end{align} \]</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha(l_t) = \alpha_F + \alpha_P \cdot \bf{1}\)</span> <span class="math notranslate nohighlight">\((l_t = P)\)</span>.</p>
+<p>The CRRA utility depends on consumption per adult equivalent, female labor supply <span class="math notranslate nohighlight">\(l\)</span>, characteristics <span class="math notranslate nohighlight">\(Z\)</span>, and {diw preference for work <span class="math notranslate nohighlight">\(\theta\)</span>}. <span class="math notranslate nohighlight">\(Z\)</span> can contain information on marital status, presence of children, their interaction, dummies for children in different age groups, an indicator wether or not the partner is working, etc. <span class="math notranslate nohighlight">\(U(.)\)</span> of not working is normalised to zero; <span class="math notranslate nohighlight">\(\beta\)</span> is set to 0.98;</p>
+<p>There are several implications of the choice of this particular form of the utility function. Given the above form, instantaneous utility is non-separable in consumption and leisure. Total (lifetime) utility is the sum of CRRA functions, i.e., it is additively separable intertemporaneously. <span class="math notranslate nohighlight">\(\mu\)</span> is the curvature parameter that governs risk-aversion and the elasticity of intertemporal substitution. The choice of <span class="math notranslate nohighlight">\(\mu&lt;0\)</span> means that the utility <span class="math notranslate nohighlight">\(u(.)\)</span> is always negative (bounded by zero from above, i.e., for <span class="math notranslate nohighlight">\(c\rightarrow \infty\)</span>), and the higher the argument <span class="math notranslate nohighlight">\(U\)</span> in the exponential, the lower the overall utility. A positive utility, <span class="math notranslate nohighlight">\(U(.)\)</span>,  for <span class="math notranslate nohighlight">\(l = P/F\)</span> implies that working reduces the utility of consumption and that consumption and labor supply are complements.</p>
+</div>
+<div class="section" id="budget-constraint">
+<h4>Budget constraint<a class="headerlink" href="#budget-constraint" title="Permalink to this headline">¶</a></h4>
+<p>In a more involved case, the value function is maximised subject to the following budget constraint:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{cases}
+a_{t+1} = (1+r)a_t + h_t w_t + m_t \tilde{h_t} \tilde{w_t} - T(l_t, X_t) - Q(t^k, h_t, \tilde{h_t}, m_t) - c_t,
+\\[4pt]
+a_{t+1} = \underline{a_s},
+\end{cases}\end{split}\]</div>
+<p>with initial and terminal conditions <span class="math notranslate nohighlight">\(a_0 = 0\)</span> and <span class="math notranslate nohighlight">\(a_{\tilde{t}+1} \geq 0\)</span>.</p>
+<p>Notation is to be read as follows:</p>
+<ul class="simple">
+<li><span class="math notranslate nohighlight">\(r\)</span> - risk free interest rate</li>
+<li><span class="math notranslate nohighlight">\((w, \tilde{w})\)</span> - hourly rates of wife and husband</li>
+<li><span class="math notranslate nohighlight">\((h, \tilde{h})\)</span> - working hours of wife and husband</li>
+<li><span class="math notranslate nohighlight">\(\underline{a_s}\)</span> - borrowing limit, which is either zero, or equal to the amount of student loan borrowed (negative number)</li>
+<li><span class="math notranslate nohighlight">\(T\)</span> - tax and welfare transfer system, nonconcave, nonsmooth, and often discontinuous</li>
+<li><span class="math notranslate nohighlight">\(Q\)</span> - childcare costs</li>
+</ul>
+<p>In the current simplified version of the model, the budget constrained is given by <span class="math notranslate nohighlight">\(c_t =  h_t w_t + m_t \tilde{h_t} \tilde{w_t} - T(l_t, X_t) - Q(t^k, h_t, \tilde{h_t}, m_t)\)</span>.</p>
+</div>
+<div class="section" id="female-wage-equation">
+<h4>Female wage equation<a class="headerlink" href="#female-wage-equation" title="Permalink to this headline">¶</a></h4>
+<p>The baseline specification of the female wage process is summarized in the following equations:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}ln \hspace{2pt} w_t^m &amp; = \gamma_{s,0}  + \gamma_{s,1} ln(e_t + 1) + \xi_t,\\
+ln \hspace{2pt} w_t &amp; = ln \hspace{2pt} w_t^m - \xi_t,\\
+e_t &amp; = e_{t-1}(1-\delta_s) + g_s(l_{t-1}),\\\end{split}\]</div>
+<p>where</p>
+<ul class="simple">
+<li><span class="math notranslate nohighlight">\(ln \hspace{2pt} w_t^m\)</span> - observed hourly wage rate</li>
+<li><span class="math notranslate nohighlight">\(\xi_t\)</span> - i.i.d. normal measurement error</li>
+<li><span class="math notranslate nohighlight">\(e_t\)</span> - experience measured in years</li>
+<li><span class="math notranslate nohighlight">\(\delta_s\)</span> - per period depreciation rate</li>
+<li><span class="math notranslate nohighlight">\(g_s\)</span> - per period rate of experience accumulation: <span class="math notranslate nohighlight">\(g_s(F) = 1\)</span></li>
+</ul>
+</div>
+</div>
+<div class="section" id="to-be-implemented">
+<h3>To be implemented<a class="headerlink" href="#to-be-implemented" title="Permalink to this headline">¶</a></h3>
+<p>The goal of this project is to develop a computational model similar to the one used in Blundell et. al. (2017). Features of the model that are still missing in the current implementation include:</p>
+<ul class="simple">
+<li>budget constraint:<ul>
+<li>male wages</li>
+<li>tax function which varies by year</li>
+<li>childcare costs</li>
+<li>savings</li>
+</ul>
+</li>
+<li>female wage equation:<ul>
+<li>individual AR1 peoductivity process</li>
+<li>beliefs</li>
+</ul>
+</li>
+<li>exogenous processes<ul>
+<li>male wage equation</li>
+<li>prpbability of child arriving</li>
+<li>probability of partner arriving</li>
+<li>probability of partner leaving</li>
+</ul>
+</li>
+</ul>
+<p>Furthermore, we plan to include model features that go beyond the application in Blundell et. al. (2017):</p>
+<ul class="simple">
+<li>beliefs in the female wage equation</li>
+<li>labor market frictions</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="developer_docs.html" class="btn btn-neutral float-right" title="Developer Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mathematical_model.html" class="btn btn-neutral" title="Mathematical Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, soepy-dev team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

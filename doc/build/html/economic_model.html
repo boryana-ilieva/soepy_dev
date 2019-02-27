@@ -1,0 +1,230 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Economic Model &mdash; soepy 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Mathematical Model" href="mathematical_model.html" />
+    <link rel="prev" title="Computational Model" href="computational_model.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> soepy
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="computational_model.html">Computational Model</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Economic Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mathematical_model.html">Mathematical Model</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">soepy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Economic Model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/economic_model.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="economic-model">
+<h1>Economic Model<a class="headerlink" href="#economic-model" title="Permalink to this headline">¶</a></h1>
+<p>This part of the documentation contains detailed information on the economic model. In particular, it discusses all assumptions on primitives we base our computational model on, e.g., preference structure, attitutes towards risk, beliefs regarding key variables, etc.</p>
+<p>At time <span class="math notranslate nohighlight">\(t= 1,..., T\)</span> each individual observes the state of the economic environment <span class="math notranslate nohighlight">\(s \in S\)</span> and chooses an action <span class="math notranslate nohighlight">\(a\)</span> from the set of admissible actions <span class="math notranslate nohighlight">\(A\)</span>. The decision has two consequences: an individual receives an immediate utility <span class="math notranslate nohighlight">\(u_t(s,a)\)</span> and the economy evolves to a new state <span class="math notranslate nohighlight">\(s'\)</span>. The transition from <span class="math notranslate nohighlight">\(s\)</span> to <span class="math notranslate nohighlight">\(s'\)</span> is affected by the action. Individuals are forward-looking, thus they do not simply choose the alternative with the highest immediate utility. Instead, they take the future consequences of their current action into account.</p>
+<img alt="_images/timing.png" src="_images/timing.png" />
+<p>The above figure depicts the timing of events in the model for two generic time periods. At the beginning of each period <span class="math notranslate nohighlight">\(t\)</span> an individual fully learns about the immediate utility of each alternative, chooses one of them, and receives its immediate utility. Then the state evolves from <span class="math notranslate nohighlight">\(s\)</span> to <span class="math notranslate nohighlight">\(s'\)</span> and the process is repeated in <span class="math notranslate nohighlight">\(t + 1\)</span>.</p>
+<p>A decision rule <span class="math notranslate nohighlight">\(d_t\)</span> specifies the action at a particular time <span class="math notranslate nohighlight">\(t\)</span> for any possible state. A policy <span class="math notranslate nohighlight">\(\pi = (d_1,..., d_T)\)</span> provides the individual with a prescription for choosing an action in any possible future state. It is a sequence of decision rules and its implementation generates a sequence of utilities. The evolution of states over time is at least partly unknown as future utilities depend on, for example, shocks to preferences. Let <span class="math notranslate nohighlight">\(X_t\)</span> denote the random variable for the state at time <span class="math notranslate nohighlight">\(t\)</span>.</p>
+<p>In this life cycle model, individuals make their decisions facing risk. Agents have rational expectations and thus rational choices are expressed by expected utility preferences. In a static setting, individuals in state :math:$s$ rank each action :math:$a$ according to the criterion formalized in the equation below:</p>
+<div class="math notranslate nohighlight">
+\[v_{T - 1}(s, a) = \int_S \:u_T(s^\prime, d_T(s^\prime))\: dp_{T - 1}(s, a)\]</div>
+<p>In a dynamic setting, individuals maximize their total doscounted utility. A constant discount factor ensures dynamic consistency of preferences as the individual’s future actions agree with the planned-for contingencies.</p>
+<div class="math notranslate nohighlight">
+\[v^{\pi^*}_1(s) = \max_{\pi \in \Pi} E_{s}^\pi\left[\sum^{T}_{t = 1}  \delta^{t - 1} u_t(X_t, d_t(X_t))\right]\]</div>
+<p>The above equation provides the formal representation of the individual’s objective. Given an initial state <span class="math notranslate nohighlight">\(s\)</span>, individuals seek to implement the optimal policy <span class="math notranslate nohighlight">\(\pi^*\)</span> from the set of all possible policies <span class="math notranslate nohighlight">\(\Pi\)</span> that maximizes the expected total discounted utility over all <span class="math notranslate nohighlight">\(T\)</span>.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mathematical_model.html" class="btn btn-neutral float-right" title="Mathematical Model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="computational_model.html" class="btn btn-neutral" title="Computational Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, soepy-dev team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
