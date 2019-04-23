@@ -1,0 +1,37 @@
+{% set data = load_setup_py_data() %}
+
+package:
+  name: soepy_dev
+  version: {{ data.get('version') }}
+
+source:
+  path: ../soepy_dev
+
+requirements:
+  build:
+    - python {{ python }}
+    - setuptools
+  run:
+    - python
+    - soepy_dev >=0.0.10
+    - numpy
+    - pandas
+    - pandoc
+    - pip: [oyaml, nbsphinx, sphinx_rtd_theme]
+
+test:
+  commands:
+    - py.test
+  files:
+    - soepy_dev/soepy/test/test_integration.py
+    - soepy_dev/soepy/test/test_quality.py
+    - soepy_dev/soepy/test/test_regression.py
+    - soepy_dev/soepy/test/test_unit.py
+  requires:
+    - pytest
+    - flake8
+
+about:
+  home: https://github.com/OpenSourceEconomics/soepy
+  license: MIT
+  summary: 'Simulate and estimate a dynamic model of human capital.'
